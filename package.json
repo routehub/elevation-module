@@ -26,6 +26,7 @@
     "dist"
   ],
   "dependencies": {
+    "@turf/helpers": "^6.1.4",
     "@turf/length": "^6.0.2",
     "chart.js": "^2.9.3",
     "turf-along": "github:ctyo/turf-along#complement_elevation"
