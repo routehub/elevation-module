@@ -1,7 +1,7 @@
 import Chart from 'chart.js'
 import turfLength from '@turf/length'
 import { lineString } from '@turf/helpers'
-import { turfAlong } from 'turf-along'
+import turfAlong from 'turf-along'
 
 /**
  * create Elevation Graph Object. using Chart.js
