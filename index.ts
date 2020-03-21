@@ -2,7 +2,13 @@ import Chart from 'chart.js'
 import turfLength from '@turf/length'
 import { turfAlong } from 'turf-along'
 
-export default function (element, cooard, option) {
+/**
+ * create Elevation Graph Object. using Chart.js
+ * @param element target Dom element.
+ * @param cooard [[lat, lng, altitude] , [lat, lng, alt]....
+ * @param option [options={}] Optional parameters
+ */
+function chartjs_util_elevation(element, cooard, option) {
     // set option 
     const sampling = option.sampling || 0.1 // part of pos(@0.1km)
     const backgroundColor = option.backgroundColor || "rgb(255,51,242,0.7)";
@@ -53,6 +59,6 @@ export default function (element, cooard, option) {
             }
         }
     })
-
-
 }
+
+export default chartjs_util_elevation
