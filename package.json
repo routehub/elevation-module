@@ -1,6 +1,6 @@
 {
   "name": "chartjs-util-elevation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Map and Elevation Graph Library. using Chart.js and turf.js.",
   "main": "dist/index.js",
   "scripts": {
