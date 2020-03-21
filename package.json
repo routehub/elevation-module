@@ -1,0 +1,33 @@
+{
+  "name": "chartjs-util-elevation",
+  "version": "1.0.0",
+  "description": "Map and Elevation Graph Library. using Chart.js and turf.js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ctyo/chartjs-util-elevation.git"
+  },
+  "keywords": [
+    "Chart.js",
+    "turf.js",
+    "mapbox"
+  ],
+  "author": "ctyo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ctyo/chartjs-util-elevation/issues"
+  },
+  "homepage": "https://github.com/ctyo/chartjs-util-elevation#readme",
+  "dependencies": {
+    "@turf/length": "^6.0.2",
+    "chart.js": "^2.9.3",
+    "turf-along": "github:ctyo/turf-along#complement_elevation"
+  },
+  "devDependencies": {
+    "requirejs": "^2.3.6",
+    "typescript": "^3.8.3"
+  }
+}
