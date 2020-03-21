@@ -1,7 +1,6 @@
 import Chart from 'chart.js'
 import turfLength from '@turf/length'
-import turf from '@turf/helpers'
-
+import { lineString } from '@turf/helpers'
 import { turfAlong } from 'turf-along'
 
 /**
@@ -11,7 +10,7 @@ import { turfAlong } from 'turf-along'
  * @param option [options={}] Optional parameters
  */
 function chartjs_util_elevation(element, cooard, option) {
-    const line = turf.lineString(cooard)
+    const line = lineString(cooard)
 
     // set option 
     const sampling = option.sampling || 0.1 // part of pos(@0.1km)
@@ -20,10 +19,10 @@ function chartjs_util_elevation(element, cooard, option) {
     // normalize data
     const total_distance = turfLength(line)
     let normalizedCooard = [] // distance normalize cooards
-    let labels
+    let labels = []
     for (let now = 0; now < total_distance; now += sampling) {
         const label = (labels.length == 0 || labels.length % 5 === 0) ? Math.round(now * 1000) : null
-        labels.push = label
+        labels.push(label)
         normalizedCooard.push(turfAlong(line, now))
     }
     const normalizedLevel = normalizedCooard.map((p) => { return p.geometry.coordinates[2]; })

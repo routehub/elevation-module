@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var chart_js_1 = __importDefault(require("chart.js"));
 var length_1 = __importDefault(require("@turf/length"));
-var helpers_1 = __importDefault(require("@turf/helpers"));
+var helpers_1 = require("@turf/helpers");
 var turf_along_1 = require("turf-along");
 /**
  * create Elevation Graph Object. using Chart.js
@@ -14,17 +14,17 @@ var turf_along_1 = require("turf-along");
  * @param option [options={}] Optional parameters
  */
 function chartjs_util_elevation(element, cooard, option) {
-    var line = helpers_1.default.lineString(cooard);
+    var line = helpers_1.lineString(cooard);
     // set option 
     var sampling = option.sampling || 0.1; // part of pos(@0.1km)
     var backgroundColor = option.backgroundColor || "rgb(255,51,242,0.7)";
     // normalize data
     var total_distance = length_1.default(line);
     var normalizedCooard = []; // distance normalize cooards
-    var labels;
+    var labels = [];
     for (var now = 0; now < total_distance; now += sampling) {
         var label = (labels.length == 0 || labels.length % 5 === 0) ? Math.round(now * 1000) : null;
-        labels.push = label;
+        labels.push(label);
         normalizedCooard.push(turf_along_1.turfAlong(line, now));
     }
     var normalizedLevel = normalizedCooard.map(function (p) { return p.geometry.coordinates[2]; });
