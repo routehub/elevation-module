@@ -139,8 +139,6 @@
 
         },
         rendar: function () {
-            // パス要素を追加
-            path = svg.append("path");
             // エリアを追加
             lineArea = svg.append("path");
 
@@ -171,6 +169,8 @@
             overlay = svg.append("rect");
             brush = svg.append("g");
 
+            // パス要素を追加
+            path = svg.append("path");
         },
         update: function () {
             // グラフの幅
@@ -251,7 +251,7 @@
             axisy = d3.axisLeft(yScale)
                 .tickSizeInner(-width)
                 .tickFormat((d) => {
-                    return d === 0 ? '' : d + 'm'
+                    return d === 0 ? d : d + 'm'
                 });
 
 
