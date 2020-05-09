@@ -26,10 +26,11 @@
     "dist"
   ],
   "dependencies": {
+    "@turf/distance": "^6.0.1",
     "@turf/helpers": "^6.1.4",
     "@turf/length": "^6.0.2",
-    "d3": "^5.16.0",
-    "turf-along": "github:ctyo/turf-along#complement_elevation"
+    "@types/d3": "^5.7.2",
+    "d3": "^5.16.0"
   },
   "devDependencies": {
     "requirejs": "^2.3.6",

@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "module": "commonjs",
     "declaration": true,
     "esModuleInterop": true,
     "strict": false,
-    "outDir": "dist/"
+    "outDir": "dist/",
+    "moduleResolution": "node"
   },
   "files": [
     "index.ts"
