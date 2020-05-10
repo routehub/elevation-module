@@ -1,6 +1,12 @@
 declare class Option {
+    selector: string;
     color: string;
+    pinColor: string;
     padding: number;
+    onHover: any;
+    onSelectStart: any;
+    onSelectMove: any;
+    onSelectEnd: any;
 }
 export declare class ElevationGraph {
     private option;
@@ -8,8 +14,6 @@ export declare class ElevationGraph {
     private contents;
     private svg;
     private tooltip;
-    private padding;
-    private lineColor;
     constructor(routeData: any, option: Option);
     private initialize;
     update(routeData: any): void;
