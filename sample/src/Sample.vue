@@ -14,8 +14,21 @@ export default {
       [138.8544238888889, 35.80759305555556, 905.5],
       [138.8544361111111, 35.807743055555555, 907.5]
     ];
-    console.dir(this);
-    new ElevationGraph(route, { color: "green", padding: 50 });
+    const option = {
+      color: "red",
+      pinColor: "blue",
+      padding: 50,
+      onSelectStart: e => {
+        console.log("start");
+      },
+      onSelectMove: e => {
+        console.log("move");
+      },
+      onSelectEnd: e => {
+        console.log("end");
+      }
+    };
+    new ElevationGraph(route, option);
   }
 };
 </script>
@@ -78,6 +91,6 @@ export default {
 }
 
 .brush .selection {
-  fill: palevioletred;
+  fill: green;
 }
 </style>

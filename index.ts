@@ -15,7 +15,13 @@ class Distance {
 
 class Option {
     color: string;
+    pinColor: string;
     padding: number;
+
+    onSelectStart: any; // 選択時
+    onSelectMove: any; // 選択しながら移動時
+    onSelectEnd: any; // 選択時完了時
+
 }
 
 export class ElevationGraph {
@@ -27,9 +33,6 @@ export class ElevationGraph {
     private svg: any;
     private tooltip: any;
 
-    private padding: number;
-    private lineColor: any;
-
     constructor(routeData: any, option: Option) {
         this.option = option;
         this.initialize();
@@ -40,13 +43,10 @@ export class ElevationGraph {
         this.contents = d3.select('#chart');
         this.svg = this.contents.append("svg");
         this.tooltip = d3.select("#chart").append("div").attr("class", "chart--tooltip");
-
-        this.lineColor = d3.rgb(this.option.color);
     }
 
     public update(routeData) {
         this.distData = this.routeToDistance(routeData);
-        console.dir(this.distData);
         this.draw();
     }
 
@@ -94,7 +94,7 @@ export class ElevationGraph {
                 focusPoint = focus.append("circle")
                     .attr("r", 4)
                     .attr("fill", "#fff")
-                    .attr("stroke", self.lineColor)
+                    .attr("stroke", d3.rgb(self.option.pinColor))
                     .attr("stroke-width", 2)
 
                 // オーバーレイ要素を追加
@@ -143,9 +143,6 @@ export class ElevationGraph {
                     .curve(d3.curveCatmullRom.alpha(0.4));
             },
             addScales: function () {
-
-                // x軸の目盛りの量
-                let xTicks = (window.innerWidth < 768) ? 6 : 12;
                 // X軸を時間のスケールに設定する
                 xScale = d3.scaleLinear()
                     // 最小値と最大値を指定しX軸の領域を設定する
@@ -170,6 +167,12 @@ export class ElevationGraph {
                     // SVG内でのY軸の位置の開始位置と終了位置を指定しY軸の幅を設定する
                     .range([height, self.option.padding]);
 
+                // x軸の目盛りの量
+                let xTicks = (self.contents.node().clientWidth < 768) ? 6 : 12;
+
+                // x軸の目盛りの量
+                let yTicks = (self.contents.node().clientHeight < 300) ? 4 : 12;
+
                 // scaleをセットしてX軸を作成
                 let axisx = d3.axisBottom(xScale)
                     // グラフの目盛りの数を設定
@@ -181,6 +184,7 @@ export class ElevationGraph {
 
                 // scaleをセットしてY軸を作成
                 let axisy = d3.axisLeft(yScale)
+                    .ticks(yTicks)
                     .tickSizeInner(-width)
                     .tickFormat((d: any) => {
                         return d === 0 ? d : d + 'm'
@@ -201,12 +205,11 @@ export class ElevationGraph {
             addLine: function () {
                 //lineを生成
                 line = this.getLine();
-                console.dir(self.distData)
                 path
                     // dataをセット
                     .datum(self.distData)
                     // strokeカラーを設定
-                    .attr("stroke", self.lineColor)
+                    .attr("stroke", d3.rgb(self.option.color))
                     .attr("fill", "none")
                     // strokeカラーを設定
                     .attr("stroke-width", 2)
@@ -256,6 +259,16 @@ export class ElevationGraph {
                 brush.on("mousemove", this.handleMouseMove)
                     .on("mouseout", this.handleMouseOut);
 
+                if (self.option.onSelectStart) {
+                    brushX.on('start', () => { self.option.onSelectStart.call(this, d3.event) })
+                }
+
+                if (self.option.onSelectEnd) {
+                    brushX.on('end', () => { self.option.onSelectEnd.call(this, d3.event) })
+                }
+                if (self.option.onSelectMove) {
+                    brushX.on('brush', () => { self.option.onSelectMove.call(this, d3.event) })
+                }
 
             },
             handleMouseMove: function () {
