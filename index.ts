@@ -18,6 +18,8 @@ class Option {
     pinColor: string;
     padding: number;
 
+    onHover: any; // hover時
+
     onSelectStart: any; // 選択時
     onSelectMove: any; // 選択しながら移動時
     onSelectEnd: any; // 選択時完了時
@@ -272,12 +274,13 @@ export class ElevationGraph {
 
             },
             handleMouseMove: function () {
-                const bisectDate = d3.bisector(function (d: any) { return d.dist; }).left;
+                const bisectDate = d3.bisector(function (d: any) { return d.distance; }).left;
                 let x0 = xScale.invert(d3.mouse(this)[0]),
                     i = bisectDate(self.distData, x0, 1),
                     d0 = self.distData[i - 1],
                     d1 = self.distData[i],
-                    d = x0 - d0.distance > d1.distance - x0 ? d1 : d0;
+                    j = x0 - d0.distance > d1.distance - x0 ? i - 1 : i,
+                    d = self.distData[j];
 
                 let tooltipY = (d3.event.pageY - 40);
                 let tooltipX = (d3.event.pageX + 20);
@@ -302,6 +305,11 @@ export class ElevationGraph {
                     .attr("transform", "translate(" + xScale(d.distance) + "," + 0 + ")");
 
                 focusPoint.attr("transform", "translate(" + 0 + "," + yScale(d.elevation) + ")")
+
+                // hover user event
+                if (self.option.onHover) {
+                    self.option.onHover.call(this, d, j)
+                }
 
             },
             handleMouseOut: function (d, i) {

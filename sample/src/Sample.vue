@@ -18,6 +18,9 @@ export default {
       color: "red",
       pinColor: "blue",
       padding: 50,
+      onHover: (d, i) => {
+        console.log(d, i);
+      },
       onSelectStart: e => {
         console.log("start");
       },
