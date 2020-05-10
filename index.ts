@@ -14,6 +14,8 @@ class Distance {
 }
 
 class Option {
+    selector: string;
+
     color: string;
     pinColor: string;
     padding: number;
@@ -42,9 +44,9 @@ export class ElevationGraph {
     }
 
     private initialize() {
-        this.contents = d3.select('#chart');
+        this.contents = d3.select(this.option.selector);
         this.svg = this.contents.append("svg");
-        this.tooltip = d3.select("#chart").append("div").attr("class", "chart--tooltip");
+        this.tooltip = d3.select(this.option.selector).append("div").attr("class", "chart--tooltip");
     }
 
     public update(routeData) {

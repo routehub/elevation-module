@@ -15,6 +15,7 @@ export default {
       [138.8544361111111, 35.807743055555555, 907.5]
     ];
     const option = {
+      selector: "#chart",
       color: "red",
       pinColor: "blue",
       padding: 50,
@@ -31,7 +32,7 @@ export default {
         console.log("end");
       }
     };
-    new ElevationGraph(route, option);
+    const graph = new ElevationGraph(route, option);
   }
 };
 </script>
