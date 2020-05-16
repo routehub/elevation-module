@@ -45,7 +45,7 @@ export class ElevationGraph {
 
     private initialize() {
         this.contents = d3.select(this.option.selector);
-        this.svg = this.contents.append("svg");
+        this.svg = this.contents.append("svg").attr("width", '100%').attr("height", '100%');
         this.tooltip = d3.select(this.option.selector).append("div").attr("class", "chart--tooltip");
     }
 
