@@ -20,16 +20,16 @@ export default {
       pinColor: "blue",
       padding: 50,
       onHover: (d, i) => {
-        console.log(d, i);
+        //        console.log(d, i);
       },
-      onSelectStart: e => {
-        console.log("start");
+      onSelectStart: (e, i) => {
+        console.log("start : " + i);
       },
-      onSelectMove: e => {
-        console.log("move");
+      onSelectMove: (e, i, j) => {
+        console.log("move : start=" + i + "; end=" + j);
       },
-      onSelectEnd: e => {
-        console.log("end");
+      onSelectEnd: (e, j) => {
+        console.log("end : " + j);
       }
     };
     const graph = new ElevationGraph(route, option);

@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import { point } from '@turf/helpers';
 import distance from '@turf/distance';
-import { color } from 'd3';
+import { color, select } from 'd3';
 
 class Distance {
     distance: number;
@@ -258,20 +258,42 @@ export class ElevationGraph {
                 brushX = d3.brushX().extent([[self.option.padding, 0], [width, height]]);
             },
             mouseEvent: function () {
+
+                const getPointer = (selection) => {
+                    const bisectDate = d3.bisector(function (d: any) { return d.distance; }).left;
+                    let x0 = xScale.invert(selection),
+                        i = bisectDate(self.distData, x0, 1),
+                        d0 = self.distData[i - 1],
+                        d1 = self.distData[i],
+                        j = x0 - d0.distance > d1.distance - x0 ? i - 1 : i
+                    return j
+                };
+
                 brush.call(brushX);
                 // overlayイベントだがbrushがイベントを食べるのでこちらで発火
                 brush.on("mousemove", this.handleMouseMove)
                     .on("mouseout", this.handleMouseOut);
 
                 if (self.option.onSelectStart) {
-                    brushX.on('start', () => { self.option.onSelectStart.call(this, d3.event) })
+                    brushX.on('start', () => {
+                        const selection = d3.event.selection ? d3.event.selection[0] : d3.event.sourceEvent.clientX;
+                        self.option.onSelectStart.call(this, d3.event, getPointer(selection))
+                    })
                 }
 
                 if (self.option.onSelectEnd) {
-                    brushX.on('end', () => { self.option.onSelectEnd.call(this, d3.event) })
+                    brushX.on('end', () => {
+                        const selection = d3.event.selection ? d3.event.selection[1] : d3.event.sourceEvent.clientX;
+                        self.option.onSelectEnd.call(this, d3.event, getPointer(selection))
+                    })
                 }
                 if (self.option.onSelectMove) {
-                    brushX.on('brush', () => { self.option.onSelectMove.call(this, d3.event) })
+                    brushX.on('brush', () => {
+                        self.option.onSelectMove.call(this, d3.event,
+                            getPointer(d3.event.selection[0]),
+                            getPointer(d3.event.selection[1])
+                        )
+                    })
                 }
 
             },
