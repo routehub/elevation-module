@@ -216,18 +216,31 @@ var ElevationGraph = /** @class */ (function () {
             },
             mouseEvent: function () {
                 var _this = this;
+                var getPointer = function (selection) {
+                    var bisectDate = d3.bisector(function (d) { return d.distance; }).left;
+                    var x0 = xScale.invert(selection), i = bisectDate(self.distData, x0, 1), d0 = self.distData[i - 1], d1 = self.distData[i], j = x0 - d0.distance > d1.distance - x0 ? i - 1 : i;
+                    return j;
+                };
                 brush.call(brushX);
                 // overlayイベントだがbrushがイベントを食べるのでこちらで発火
                 brush.on("mousemove", this.handleMouseMove)
                     .on("mouseout", this.handleMouseOut);
                 if (self.option.onSelectStart) {
-                    brushX.on('start', function () { self.option.onSelectStart.call(_this, d3.event); });
+                    brushX.on('start', function () {
+                        var selection = d3.event.selection ? d3.event.selection[0] : d3.event.sourceEvent.clientX;
+                        self.option.onSelectStart.call(_this, d3.event, getPointer(selection));
+                    });
                 }
                 if (self.option.onSelectEnd) {
-                    brushX.on('end', function () { self.option.onSelectEnd.call(_this, d3.event); });
+                    brushX.on('end', function () {
+                        var selection = d3.event.selection ? d3.event.selection[1] : d3.event.sourceEvent.clientX;
+                        self.option.onSelectEnd.call(_this, d3.event, getPointer(selection));
+                    });
                 }
                 if (self.option.onSelectMove) {
-                    brushX.on('brush', function () { self.option.onSelectMove.call(_this, d3.event); });
+                    brushX.on('brush', function () {
+                        self.option.onSelectMove.call(_this, d3.event, getPointer(d3.event.selection[0]), getPointer(d3.event.selection[1]));
+                    });
                 }
             },
             handleMouseMove: function () {
