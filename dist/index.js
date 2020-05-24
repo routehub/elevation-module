@@ -178,7 +178,7 @@ var ElevationGraph = /** @class */ (function () {
                     .datum(self.distData)
                     // strokeカラーを設定
                     .attr("stroke", d3.rgb(self.option.color))
-                    .attr("fill", "none")
+                    .attr("fill", d3.rgb(self.option.fill))
                     // strokeカラーを設定
                     .attr("stroke-width", 2)
                     // d属性を設定
@@ -246,10 +246,10 @@ var ElevationGraph = /** @class */ (function () {
             handleMouseMove: function () {
                 var bisectDate = d3.bisector(function (d) { return d.distance; }).left;
                 var x0 = xScale.invert(d3.mouse(this)[0]), i = bisectDate(self.distData, x0, 1), d0 = self.distData[i - 1], d1 = self.distData[i], j = x0 - d0.distance > d1.distance - x0 ? i - 1 : i, d = self.distData[j];
-                var tooltipY = (d3.event.pageY - 40);
-                var tooltipX = (d3.event.pageX + 20);
+                var tooltipY = (d3.event.layerY - 40);
+                var tooltipX = (d3.event.layerX + 20);
                 if ((window.innerWidth - 160) < tooltipX) {
-                    tooltipX = (d3.event.pageX - 200);
+                    tooltipX = (d3.event.layerX - 200);
                 }
                 self.tooltip
                     .html("")

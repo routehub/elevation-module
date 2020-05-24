@@ -17,6 +17,8 @@ class Option {
     selector: string;
 
     color: string;
+    fill: string;
+
     pinColor: string;
     padding: number;
 
@@ -214,7 +216,7 @@ export class ElevationGraph {
                     .datum(self.distData)
                     // strokeカラーを設定
                     .attr("stroke", d3.rgb(self.option.color))
-                    .attr("fill", "none")
+                    .attr("fill", d3.rgb(self.option.fill))
                     // strokeカラーを設定
                     .attr("stroke-width", 2)
                     // d属性を設定
@@ -306,11 +308,11 @@ export class ElevationGraph {
                     j = x0 - d0.distance > d1.distance - x0 ? i - 1 : i,
                     d = self.distData[j];
 
-                let tooltipY = (d3.event.pageY - 40);
-                let tooltipX = (d3.event.pageX + 20);
+                let tooltipY = (d3.event.layerY - 40);
+                let tooltipX = (d3.event.layerX + 20);
 
                 if ((window.innerWidth - 160) < tooltipX) {
-                    tooltipX = (d3.event.pageX - 200);
+                    tooltipX = (d3.event.layerX - 200);
                 }
 
                 self.tooltip

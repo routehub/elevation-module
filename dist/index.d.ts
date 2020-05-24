@@ -1,6 +1,7 @@
 declare class Option {
     selector: string;
     color: string;
+    fill: string;
     pinColor: string;
     padding: number;
     onHover: any;
