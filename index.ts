@@ -219,6 +219,8 @@ export class ElevationGraph {
                     .attr("fill", d3.rgb(self.option.fill))
                     // strokeカラーを設定
                     .attr("stroke-width", 2)
+                    // fillした場合も後ろにイベントを透過するように変更
+                    .style("pointer-events", "none")
                     // d属性を設定
                     .attr("d", line)
             },
