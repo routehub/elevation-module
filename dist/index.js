@@ -37,6 +37,11 @@ var ElevationGraph = /** @class */ (function () {
         this.tooltip = d3.select(this.option.selector).append("div").attr("class", "chart--tooltip");
     };
     ElevationGraph.prototype.update = function (routeData) {
+        // fillを埋めるために最初を最後を標高0でセットする
+        routeData.unshift(routeData[0]);
+        routeData[0][2] = 0;
+        routeData.push(routeData[routeData.length - 1]);
+        routeData[routeData.length - 1][2] = 0;
         this.distData = this.routeToDistance(routeData);
         this.draw();
     };

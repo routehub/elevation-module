@@ -52,6 +52,13 @@ export class ElevationGraph {
     }
 
     public update(routeData) {
+
+        // fillを埋めるために最初を最後を標高0でセットする
+        routeData.unshift(routeData[0]);
+        routeData[0][2] = 0;
+        routeData.push(routeData[routeData.length - 1]);
+        routeData[routeData.length - 1][2] = 0;
+
         this.distData = this.routeToDistance(routeData);
         this.draw();
     }
