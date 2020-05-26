@@ -172,8 +172,8 @@ export class ElevationGraph {
                 yScale = d3.scaleLinear()
                     // 最小値と最大値を指定しX軸の領域を設定する
                     .domain([
-                        // 0を最小値として設定
-                        0,
+                        // 標高が0m以下があるので最小を取る
+                        d3.min(self.distData, function (d: any) { return d.elevation; }),
                         // データ内のvalueの最大値を取得
                         d3.max(self.distData, function (d: any) { return d.elevation; })
                     ])
