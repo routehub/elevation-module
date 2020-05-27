@@ -1,8 +1,24 @@
-/**
- * create Elevation Graph Object. using Chart.js
- * @param element target Dom element.
- * @param cooard [[lat, lng, altitude] , [lat, lng, alt]....
- * @param option [options={}] Optional parameters
- */
-declare function chartjs_util_elevation(element: any, cooard: any, option: any): any;
-export default chartjs_util_elevation;
+declare class Option {
+    selector: string;
+    color: string;
+    fill: string;
+    pinColor: string;
+    padding: number;
+    onHover: any;
+    onSelectStart: any;
+    onSelectMove: any;
+    onSelectEnd: any;
+}
+export declare class ElevationGraph {
+    private option;
+    private distData;
+    private contents;
+    private svg;
+    private tooltip;
+    constructor(routeData: any, option: Option);
+    private initialize;
+    update(routeData: any): void;
+    private draw;
+    private routeToDistance;
+}
+export {};
